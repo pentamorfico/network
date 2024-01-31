@@ -6,7 +6,7 @@ SKIP=0
 
 while true; do
     # Find files and select a specific batch
-    find . -type f -not -path "./.git/*" -print0 | tail -zn +$SKIP | head -zn $BATCH_SIZE | xargs -0 git add
+    find . -type f -not -path "./.git/*" -print0 | head -zn +$SKIP | tail -zn $BATCH_SIZE | xargs -0 git add
 
     # Commit and push the batch
     git commit -m "Add batch of files"
