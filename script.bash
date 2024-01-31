@@ -1,26 +1,19 @@
 #!/bin/bash
 
 
-BATCH_SIZE=100000  # Number of files to process in each batch
-COUNT=0
+BATCH_SIZE=20000  # Number of files to process in each batch
+SKIP=0
 
-find . -type f -not -path "./.git/*" -print0 | while IFS= read -r -d $'\0' FILE; do
-    git add "$FILE"
-    let COUNT+=1
-    echo $FILE
-    if [[ $COUNT -eq $BATCH_SIZE ]]; then
-        git commit -m "Add batch of files"
-        git push origin main  # Replace 'main' with your branch name
-        echo "Batch committed and pushed."
-        
-        # Reset count for the next batch
-        COUNT=0
-    fi
-done
+while true; do
+    # Find files and select a specific batch
+    find . -type f -not -path "./.git/*" -print0 | tail -zn +$SKIP | head -zn $BATCH_SIZE | xargs -0 git add
 
-# Process any remaining files
-if [[ $COUNT -ne 0 ]]; then
+    # Commit and push the batch
     git commit -m "Add batch of files"
     git push origin main  # Replace 'main' with your branch name
-    echo "Final batch committed and pushed."
-fi
+
+    # Prepare for the next batch
+    let SKIP+=BATCH_SIZE
+    echo "Batch committed and pushed. Total files processed: $SKIP"
+
+done
