@@ -8,7 +8,7 @@ BATCH=()
 while IFS= read -r -d $'\0' FILE; do
     BATCH+=("$FILE")
     let COUNT+=1
-
+    echo $BATCH
     if [[ $COUNT -eq $BATCH_SIZE ]]; then
         git add "${BATCH[@]}"
         git commit -m "Add batch of files"
