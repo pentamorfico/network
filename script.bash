@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BATCH_SIZE=20000  # Number of files to process in each batch
+BATCH_SIZE=500  # Number of files to process in each batch
 SKIP=0
 
 while true; do
