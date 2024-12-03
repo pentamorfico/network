@@ -263,7 +263,7 @@
       },
       {
         "name": "Features",
-        "separateFeaturesBy": "none",
+        "separateFeaturesBy": "strand",
         "position": "both",
         "dataType": "feature",
         "dataMethod": "type",
